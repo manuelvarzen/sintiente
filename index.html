@@ -1,8 +1,38 @@
-<html>
+<!doctype html>
+<html lang="es" class="h-100"></html>
+
 <head>
+
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <meta name="Content-Type" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Sintiente" />
+    <meta name="author" content="ManuelVarZen" />
+    <meta name="generator" content="" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@lazosnexos" />
+    <meta name="twitter:creator" content="@ManuelVarZen">
+    <meta name="twitter:title" content="Sintiente" />
+    <meta name="twitter:description" content="" />
+    <meta name="twitter:image" content="https://lazosnexos.com/img/image026.jpg"/>
+    
+    <!-- Open Graph -->
+    <meta property="og:url" content="https://sintiente.laxosnexos.com" />
+    <meta property="og:type" content="page" />
+    <meta property="og:title" content="Sintiente" />
+    <meta property="og:description" content="" />
+    <meta property="og:image" content="https://lazosnexos.com/img/image026.jpg" />
+    <meta property="og:image:secure_url" content="https://lazosnexos.com/img/image026.jpg" />
+    <meta property="og:image:alt" content="filosofía" />
+
 	<title>Sintiente</title>
+	<link rel="canonical" href="https://sintiente.lazosnexos.com">
+
 	<style>
 		body { margin: 0px; background-color: black; color: red; }
 		input { cursor: pointer; }
@@ -59,7 +89,8 @@
 
 		void beams (out vec3 color, in vec3 p, in vec3 d) {
 			
-			float beam_half_side = 0.01 * scale, cell_side = scale, beam_side = beam_half_side * 2.0;
+			float beam_half_side = 0.01 * scale, cell_side = scale, beam_side = beam_half_side * 1.0;
+			
 			p = mod (p + cell_side * 0.5, cell_side);
 			
 			vec3 ad = abs(d), sd = sign(d), normal = vec3(0.0);
@@ -67,6 +98,7 @@
 			vec3 offsets = (0.5 * cell_side - beam_half_side) * (sd + 1.0) + beam_half_side;
 			
 			vec2 test;
+			
 			float closest_hit_distance = 1e2 * cell_side, ray_distance, step = cell_side / max (ad.x, max (ad.y, ad.z));
 			
 			vec3 p1 = p, p2, dist;
@@ -110,13 +142,14 @@
 			}
 
 			//incrementa la cantidad de vectores de la malla
-			color = (vec3 (dot (normal, vec3(1.0, 0.0, 0.0))) * 0.5 + 0.5) * (cell_side / closest_hit_distance);
-			color = clamp (color, 0.1, 0.1);
-			gl_FragColor = vec4 (color, 1.0);
+			color = (vec3 (dot (normal, vec3(0.1, 0.2, 0.3))) * 0.5 + 0.5) * (cell_side / closest_hit_distance);
+			color = clamp (color, 0.9, 0.9);
+			gl_FragColor = vec4 (color, 0.9
+			);
 			
 			#ifdef stripes
 			p1 = p + closest_hit_distance * d;
-			color *= mod (floor ((p1.x + p1.y + p1.z) * 9.0), 9.0) * 0.5 + 0.5;
+			color *= mod (floor ((p1.x + p1.y + p1.z) * 0.1), 9.0) * 0.9 + 0.9;
 			#endif
 		}
 
@@ -168,7 +201,7 @@
 			ray.z = inverse_root * (ray.z + velocity);
 
 			// 4th, transform the ray to lattice frame
-			beams (gl_FragColor.xyz, vec3 (0.1, 0.1, -covered_dist), normalize (ray));
+			beams (gl_FragColor.xyz, vec3 (0.0, 0.0, -covered_dist), normalize (ray));
 		}
 
 	</script>
